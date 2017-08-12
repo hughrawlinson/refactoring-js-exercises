@@ -8,10 +8,8 @@ tooManyCooks = ['c', 'g', 'f'];
 iWillFollowYouIntoTheDark = ['f', 'dm', 'bb', 'c', 'a', 'bbm'];
 babyOneMoreTime = ['cm', 'g', 'bb', 'eb', 'fm', 'ab'];
 creep = ['g', 'gsus4', 'b', 'bsus4', 'c', 'cmsus4', 'cm6'];
-paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7',
-            'em7', 'a7', 'f7', 'b'];
-toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7',
-         'g7'];
+paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7', 'em7', 'a7', 'f7', 'b'];
+toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7', 'g7'];
 bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 
 var songs = [];
@@ -26,11 +24,11 @@ function train(chords, label){
   var index;
   songs.push([label, chords]);
   labels.push(label);
-  for (index = 0; index < chords.length; index++){
-    if(!allChords.includes(chords[index])){
-      allChords.push(chords[index]);
+  chords.forEach(function(chord) {
+    if(!allChords.includes(chord)){
+      allChords.push(chord);
     }
-  }
+  });
   if(Object.keys(labelCounts).includes(label)){
     labelCounts[label] = labelCounts[label] + 1;
   } else {
