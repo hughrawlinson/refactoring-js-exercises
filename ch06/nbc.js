@@ -85,10 +85,10 @@ setChordCountsInLabels();
 setProbabilityOfChordsInLabels();
 
 function classify(chords){
-  var ttal = labelProbabilities;
-  console.log(ttal);
+  var total = labelProbabilities;
+  console.log(total);
   var classified = {};
-  Object.keys(ttal).forEach(function(difficulty){
+  Object.keys(total).forEach(function(difficulty){
     var first = labelProbabilities[difficulty] + 1.01;
     chords.forEach(function(chord){
       var probabilityOfChordInLabel =
