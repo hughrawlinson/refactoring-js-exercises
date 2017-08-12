@@ -12,7 +12,7 @@ paperBag = ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7',
 toxic = ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7',
          'g7'];
 bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
-song_11 = [];
+blankSong = [];
 
 var songs = [];
 var labels = [];
@@ -49,16 +49,16 @@ function setLabelProbabilities(){
 };
 
 function setChordCountsInLabels(){
-  songs.forEach(function(i){
-    if(chordCountsInLabels[i[0]] === undefined){
-      chordCountsInLabels[i[0]] = {};
+  songs.forEach(function(song){
+    if(chordCountsInLabels[song[0]] === undefined){
+      chordCountsInLabels[song[0]] = {};
     }
-    i[1].forEach(function(j){
-      if(chordCountsInLabels[i[0]][j] > 0){
-        chordCountsInLabels[i[0]][j] =
-chordCountsInLabels[i[0]][j] + 1;
+    song[1].forEach(function(j){
+      if(chordCountsInLabels[song[0]][j] > 0){
+        chordCountsInLabels[song[0]][j] =
+chordCountsInLabels[song[0]][j] + 1;
       } else {
-        chordCountsInLabels[i[0]][j] = 1;
+        chordCountsInLabels[song[0]][j] = 1;
       }
     });
   });
