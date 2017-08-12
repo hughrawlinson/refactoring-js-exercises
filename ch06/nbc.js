@@ -1,3 +1,5 @@
+var wish = require('wish');
+
 const easy = 'easy';
 const medium = 'medium';
 const hard = 'hard';
@@ -61,24 +63,29 @@ function setProbabilityOfChordsInLabels(){
   });
 }
 
-train(imagine, easy);
-train(somewhere_over_the_rainbow, easy);
-train(tooManyCooks, easy);
-train(iWillFollowYouIntoTheDark, medium);
-train(babyOneMoreTime, medium);
-train(creep, medium);
-train(paperBag, hard);
-train(toxic, hard);
-train(bulletproof, hard);
+function trainAll() {
+  train(imagine, easy);
+  train(somewhere_over_the_rainbow, easy);
+  train(tooManyCooks, easy);
+  train(iWillFollowYouIntoTheDark, medium);
+  train(babyOneMoreTime, medium);
+  train(creep, medium);
+  train(paperBag, hard);
+  train(toxic, hard);
+  train(bulletproof, hard);
+};
+trainAll();
 
-setLabelProbabilities();
-setChordCountsInLabels();
-setProbabilityOfChordsInLabels();
+function setLabelsAndProbabilities() {
+  setLabelProbabilities();
+  setChordCountsInLabels();
+  setProbabilityOfChordsInLabels();
+}
+setLabelsAndProbabilities();
 
 function classify(chords){
   const smoothing = 1.01;
   var classified = new Map;
-  console.log(labelProbabilities);
   labelProbabilities.forEach(function(_probabilities, difficulty){
     var first = labelProbabilities.get(difficulty) + smoothing;
     chords.forEach(function(chord){
@@ -90,8 +97,30 @@ probabilityOfChordsInLabels[difficulty][chord];
     });
     classified.set(difficulty, first);
   });
-  console.log(classified);
+  return classified;
 };
 
-classify(['d', 'g', 'e', 'dm']);
-classify(['f#m7', 'a', 'dadd9', 'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
+describe('the file', () => {
+  it('classifies', () => {
+    var classified = classify(['f#m7', 'a', 'dadd9',
+                               'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
+
+    wish(classified.get('easy') === 1.3433333333333333);
+    wish(classified.get('medium') === 1.5060259259259259);
+    wish(classified.get('hard') === 1.6884223991769547);
+  });
+
+  it('classifies again', () => {
+    var classified = classify(['d', 'g', 'e', 'dm']);
+
+    wish(classified.get('easy') === 2.023094827160494);
+    wish(classified.get('medium') === 1.855758613168724);
+    wish(classified.get('hard') === 1.855758613168724);
+  });
+
+  it('label probabilities', () => {
+    wish(labelProbabilities.get('easy') === 0.3333333333333333);
+    wish(labelProbabilities.get('medium') ===0.3333333333333333);
+    wish(labelProbabilities.get('hard') === 0.3333333333333333);
+  });
+});
