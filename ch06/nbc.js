@@ -1,4 +1,3 @@
-// songs
 imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
 somewhere_over_the_rainbow = ['c', 'em', 'f', 'g', 'am'];
 tooManyCooks = ['c', 'g', 'f'];
@@ -84,8 +83,6 @@ train(bulletproof, 'hard');
 setLabelProbabilities();
 setChordCountsInLabels();
 setProbabilityOfChordsInLabels();
-
-
 
 function classify(chords){
   var ttal = labelProbabilities;
