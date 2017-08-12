@@ -15,7 +15,7 @@ bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 var songs = [];
 var allChords = new Set();
 var labelCounts = new Map();
-var labelProbabilities = {};
+var labelProbabilities = new Map();
 var chordCountsInLabels = {};
 var probabilityOfChordsInLabels = {};
 
@@ -33,7 +33,7 @@ function train(chords, label){
 
 function setLabelProbabilities(){
   labelCounts.forEach(function(_count, label){
-    labelProbabilities[label] = labelCounts.get(label) / songs.length;
+    labelProbabilities.set(label, labelCounts.get(label) / songs.length);
   });
 };
 
@@ -79,8 +79,8 @@ function classify(chords){
   const smoothing = 1.01;
   var classified = new Map;
   console.log(labelProbabilities);
-  Object.keys(labelProbabilities).forEach(function(difficulty){
-    var first = labelProbabilities[difficulty] + smoothing;
+  labelProbabilities.forEach(function(_probabilities, difficulty){
+    var first = labelProbabilities.get(difficulty) + smoothing;
     chords.forEach(function(chord){
       var probabilityOfChordInLabel =
 probabilityOfChordsInLabels[difficulty][chord];
