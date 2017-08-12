@@ -1,8 +1,8 @@
-var wish = require('wish');
-
-const easy = 'easy';
-const medium = 'medium';
-const hard = 'hard';
+function setDifficulties() {
+  easy = 'easy';
+  medium = 'medium';
+  hard = 'hard';
+}
 
 function setSongs() {
   imagine = ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'];
@@ -16,12 +16,14 @@ function setSongs() {
   bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 };
 
-var songs = [];
-var allChords = new Set();
-var labelCounts = new Map();
-var labelProbabilities = new Map();
-var chordCountsInLabels = {};
-var probabilityOfChordsInLabels = {};
+function setup() {
+  songs = [];
+  allChords = new Set();
+  labelCounts = new Map();
+  labelProbabilities = new Map();
+  chordCountsInLabels = {};
+  probabilityOfChordsInLabels = {};
+}
 
 function train(chords, label){
   songs.push({label, chords});
@@ -66,6 +68,8 @@ function setProbabilityOfChordsInLabels(){
 }
 
 function trainAll() {
+  setDifficulties();
+  setup();
   setSongs();
   train(imagine, easy);
   train(somewhere_over_the_rainbow, easy);
@@ -76,15 +80,14 @@ function trainAll() {
   train(paperBag, hard);
   train(toxic, hard);
   train(bulletproof, hard);
+  setLabelsAndProbabilities();
 };
-trainAll();
 
 function setLabelsAndProbabilities() {
   setLabelProbabilities();
   setChordCountsInLabels();
   setProbabilityOfChordsInLabels();
 }
-setLabelsAndProbabilities();
 
 function classify(chords){
   const smoothing = 1.01;
@@ -103,7 +106,12 @@ probabilityOfChordsInLabels[difficulty][chord];
   return classified;
 };
 
+var wish = require('wish');
 describe('the file', () => {
+  before(function(){
+    trainAll();
+  });
+
   it('classifies', () => {
     var classified = classify(['f#m7', 'a', 'dadd9',
                                'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
