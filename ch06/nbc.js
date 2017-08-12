@@ -15,8 +15,8 @@ bulletproof = ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'];
 var songs = [];
 var labels = [];
 var allChords = new Set();
-var labelCounts = [];
-var labelProbabilities = [];
+var labelCounts = {};
+var labelProbabilities = {};
 var chordCountsInLabels = {};
 var probabilityOfChordsInLabels = {};
 
