@@ -27,9 +27,7 @@ function setup() {
 
 function train(chords, label){
   songs.push({label, chords});
-  chords.forEach(function(chord) {
-    allChords.add(chord);
-  });
+  chords.forEach(chord => allChords.add(chord));
   if(Array.from(labelCounts.keys()).includes(label)){
     labelCounts.set(label, labelCounts.get(label) + 1);
   } else {
@@ -39,7 +37,8 @@ function train(chords, label){
 
 function setLabelProbabilities(){
   labelCounts.forEach(function(_count, label){
-    labelProbabilities.set(label, labelCounts.get(label) / songs.length);
+    labelProbabilities.set(label,
+                           labelCounts.get(label) / songs.length);
   });
 };
 
