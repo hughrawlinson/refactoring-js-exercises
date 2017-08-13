@@ -1,12 +1,10 @@
 const classifier = {
-  setup: function() {
-    this.songs = [];
-    this.allChords = new Set();
-    this.labelCounts = new Map();
-    this.labelProbabilities = new Map();
-    this.chordCountsInLabels = new Map();
-    this.probabilityOfChordsInLabels = new Map();
-  }
+  songs: [],
+  allChords: new Set(),
+  labelCounts: new Map(),
+  labelProbabilities: new Map(),
+  chordCountsInLabels: new Map(),
+  probabilityOfChordsInLabels: new Map()
 };
 
 const songList = {
@@ -59,7 +57,6 @@ function setProbabilityOfChordsInLabels(){
 }
 
 function trainAll() {
-  classifier.setup();
   songList.songs.forEach(function({song, chords, difficulty}){
     train(chords, difficulty);
   });
