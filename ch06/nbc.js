@@ -4,7 +4,24 @@ const classifier = {
   labelCounts: new Map(),
   labelProbabilities: new Map(),
   chordCountsInLabels: new Map(),
-  probabilityOfChordsInLabels: new Map()
+  probabilityOfChordsInLabels: new Map(),
+  classify: function classify(chords){
+    const smoothing = 1.01;
+    const classified = new Map;
+    classifier.labelProbabilities.forEach(function(_probabilities, difficulty){
+      const totalLikelihood = chords.reduce(function(total, chord){
+        const probabilityOfChordInLabel =
+  probabilityOfChordsInLabels.get(difficulty)[chord];
+        if(probabilityOfChordInLabel){
+          return total * (probabilityOfChordInLabel + smoothing);
+        } else {
+          return total;
+        }
+      }, classifier.labelProbabilities.get(difficulty) + smoothing);
+      classified.set(difficulty, totalLikelihood);
+    });
+    return classified;
+  }
 };
 
 const songList = {
@@ -69,24 +86,6 @@ function setLabelsAndProbabilities() {
   setProbabilityOfChordsInLabels();
 }
 
-function classify(chords){
-  const smoothing = 1.01;
-  const classified = new Map;
-  classifier.labelProbabilities.forEach(function(_probabilities, difficulty){
-    const totalLikelihood = chords.reduce(function(total, chord){
-      const probabilityOfChordInLabel =
-probabilityOfChordsInLabels.get(difficulty)[chord];
-      if(probabilityOfChordInLabel){
-        return total * (probabilityOfChordInLabel + smoothing);
-      } else {
-        return total;
-      }
-    }, classifier.labelProbabilities.get(difficulty) + smoothing);
-    classified.set(difficulty, totalLikelihood);
-  });
-  return classified;
-};
-
 const wish = require('wish');
 describe('the file', () => {
   before(function(){
@@ -103,7 +102,7 @@ describe('the file', () => {
   });
 
   it('classifies', () => {
-    const classified = classify(['f#m7', 'a', 'dadd9',
+    const classified = classifier.classify(['f#m7', 'a', 'dadd9',
                                'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
 
     wish(classified.get('easy') === 1.3433333333333333);
@@ -112,7 +111,7 @@ describe('the file', () => {
   });
 
   it('classifies again', () => {
-    const classified = classify(['d', 'g', 'e', 'dm']);
+    const classified = classifier.classify(['d', 'g', 'e', 'dm']);
 
     wish(classified.get('easy') === 2.023094827160494);
     wish(classified.get('medium') === 1.855758613168724);
