@@ -10,26 +10,23 @@ var classifier = {
 };
 
 var songList = {
+  difficulties: ['easy', 'medium', 'hard'],
   songs: [],
   addSong: function(name, chords, difficulty) {
-    this.songs.push({name, chords, difficulty});
+    this.songs.push({name, chords, difficulty: this.difficulties[difficulty]});
   }
 }
 
 function setSongs() {
-  var easy = 'easy';
-  var medium = 'medium';
-  var hard = 'hard';
-
-  songList.addSong('imagine', ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'], easy);
-  songList.addSong('somewhereOverTheRainbow', ['c', 'em', 'f', 'g', 'am'], easy);
-  songList.addSong('tooManyCooks', ['c', 'g', 'f'], easy);
-  songList.addSong('iWillFollowYouIntoTheDark', ['f', 'dm', 'bb', 'c', 'a', 'bbm'], medium);
-  songList.addSong('babyOneMoreTime', ['cm', 'g', 'bb', 'eb', 'fm', 'ab'], medium);
-  songList.addSong('creep', ['g', 'gsus4', 'b', 'bsus4', 'c', 'cmsus4', 'cm6'], medium);
-  songList.addSong('paperBag', ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7', 'em7', 'a7', 'f7', 'b'], hard);
-  songList.addSong('toxic', ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7', 'g7'], hard);
-  songList.addSong('bulletproof', ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'], hard);
+  songList.addSong('imagine', ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'], 0);
+  songList.addSong('somewhereOverTheRainbow', ['c', 'em', 'f', 'g', 'am'], 0);
+  songList.addSong('tooManyCooks', ['c', 'g', 'f'], 0);
+  songList.addSong('iWillFollowYouIntoTheDark', ['f', 'dm', 'bb', 'c', 'a', 'bbm'], 1);
+  songList.addSong('babyOneMoreTime', ['cm', 'g', 'bb', 'eb', 'fm', 'ab'], 1);
+  songList.addSong('creep', ['g', 'gsus4', 'b', 'bsus4', 'c', 'cmsus4', 'cm6'], 1);
+  songList.addSong('paperBag', ['bm7', 'e', 'c', 'g', 'b7', 'f', 'em', 'a', 'cmaj7', 'em7', 'a7', 'f7', 'b'], 2);
+  songList.addSong('toxic', ['cm', 'eb', 'g', 'cdim', 'eb7', 'd7', 'db7', 'ab', 'gmaj7', 'g7'], 2);
+  songList.addSong('bulletproof', ['d#m', 'g#', 'b', 'f#', 'g#m', 'c#'], 2);
 };
 
 function train(chords, label){
