@@ -24,7 +24,7 @@ function setDifficulties() {
 
 function setSongs() {
   songList.addSong('imagine', ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'], easy);
-  songList.addSong('somewhere_over_the_rainbow', ['c', 'em', 'f', 'g', 'am'], easy);
+  songList.addSong('somewhereOverTheRainbow', ['c', 'em', 'f', 'g', 'am'], easy);
   songList.addSong('tooManyCooks', ['c', 'g', 'f'], easy);
   songList.addSong('iWillFollowYouIntoTheDark', ['f', 'dm', 'bb', 'c', 'a', 'bbm'], medium);
   songList.addSong('babyOneMoreTime', ['cm', 'g', 'bb', 'eb', 'fm', 'ab'], medium);
