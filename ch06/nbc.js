@@ -1,4 +1,4 @@
-var classifier = {
+const classifier = {
   setup: function() {
     this.songs = [];
     this.allChords = new Set();
@@ -9,7 +9,7 @@ var classifier = {
   }
 };
 
-var songList = {
+const songList = {
   difficulties: ['easy', 'medium', 'hard'],
   songs: [],
   addSong: function(name, chords, difficulty) {
@@ -74,11 +74,11 @@ function setLabelsAndProbabilities() {
 
 function classify(chords){
   const smoothing = 1.01;
-  var classified = new Map;
+  const classified = new Map;
   classifier.labelProbabilities.forEach(function(_probabilities, difficulty){
-    var first = classifier.labelProbabilities.get(difficulty) + smoothing;
+    let first = classifier.labelProbabilities.get(difficulty) + smoothing;
     chords.forEach(function(chord){
-      var probabilityOfChordInLabel =
+      const probabilityOfChordInLabel =
 probabilityOfChordsInLabels.get(difficulty)[chord];
       if(probabilityOfChordInLabel){
         first = first * (probabilityOfChordInLabel + smoothing);
@@ -89,7 +89,7 @@ probabilityOfChordsInLabels.get(difficulty)[chord];
   return classified;
 };
 
-var wish = require('wish');
+const wish = require('wish');
 describe('the file', () => {
   before(function(){
     songList.addSong('imagine', ['c', 'cmaj7', 'f', 'am', 'dm', 'g', 'e7'], 0);
@@ -105,7 +105,7 @@ describe('the file', () => {
   });
 
   it('classifies', () => {
-    var classified = classify(['f#m7', 'a', 'dadd9',
+    const classified = classify(['f#m7', 'a', 'dadd9',
                                'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
 
     wish(classified.get('easy') === 1.3433333333333333);
@@ -114,7 +114,7 @@ describe('the file', () => {
   });
 
   it('classifies again', () => {
-    var classified = classify(['d', 'g', 'e', 'dm']);
+    const classified = classify(['d', 'g', 'e', 'dm']);
 
     wish(classified.get('easy') === 2.023094827160494);
     wish(classified.get('medium') === 1.855758613168724);
