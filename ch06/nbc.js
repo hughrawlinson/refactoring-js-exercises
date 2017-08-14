@@ -30,24 +30,24 @@ const classifier = {
       }));
   },
   train: function(chords, label){
-    chords.forEach(chord => classifier.allChords.add(chord));
-    if(Array.from(classifier.labelCounts.keys()).includes(label)){
-      classifier.labelCounts.set(label, classifier.labelCounts.get(label) + 1);
+    chords.forEach(chord => this.allChords.add(chord));
+    if(Array.from(this.labelCounts.keys()).includes(label)){
+      this.labelCounts.set(label, this.labelCounts.get(label) + 1);
     } else {
-      classifier.labelCounts.set(label, 1);
+      this.labelCounts.set(label, 1);
     }
   },
   setLabelProbabilities: function(){
-    classifier.labelCounts.forEach(function(_count, label){
-      classifier.labelProbabilities.set(label,
-                                        classifier.labelCounts.get(label) / songList.songs.length);
-    });
+    this.labelCounts.forEach(function(_count, label){
+      this.labelProbabilities.set(label,
+                                  this.labelCounts.get(label) / songList.songs.length);
+    }, this);
   },
   trainAll: function() {
     songList.songs.forEach(function({song, chords, difficulty}){
-      classifier.train(chords, difficulty);
-    });
-    classifier.setLabelProbabilities();
+      this.train(chords, difficulty);
+    }, this);
+    this.setLabelProbabilities();
   }
 };
 
