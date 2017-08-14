@@ -14,6 +14,10 @@ class Classifier {
     this.smoothing = 1.01;
   }
 
+  addSong(name, chords, difficulty) {
+    this.songList.addSong(name, chords, difficulty);
+  }
+
   chordCountForDifficulty(difficulty, testChord){
     return this.songList.songs.reduce((counter, song) => {
       return counter + (song.difficulty === difficulty
