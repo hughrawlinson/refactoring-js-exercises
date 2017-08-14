@@ -65,12 +65,8 @@ function trainAll() {
   songList.songs.forEach(function({song, chords, difficulty}){
     train(chords, difficulty);
   });
-  setLabelsAndProbabilities();
-};
-
-function setLabelsAndProbabilities() {
   setLabelProbabilities();
-}
+};
 
 const wish = require('wish');
 describe('the file', () => {
