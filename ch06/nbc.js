@@ -35,7 +35,8 @@ const classifier = {
                   (total, chord) => total * this.valueForChordDifficulty(difficulty, chord),
                   this.labelProbabilities.get(difficulty) + this.smoothing)];
       }));
-  }};
+  }
+};
 
 const songList = {
   difficulties: ['easy', 'medium', 'hard'],
@@ -57,7 +58,7 @@ function train(chords, label){
 function setLabelProbabilities(){
   classifier.labelCounts.forEach(function(_count, label){
     classifier.labelProbabilities.set(label,
-                           classifier.labelCounts.get(label) / songList.songs.length);
+                                      classifier.labelCounts.get(label) / songList.songs.length);
   });
 };
 
@@ -90,7 +91,7 @@ describe('the file', () => {
 
   it('classifies', () => {
     const classified = classifier.classify(['f#m7', 'a', 'dadd9',
-                               'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
+                                            'dmaj7', 'bm', 'bm7', 'd', 'f#m']);
 
     wish(classified.get('easy') === 1.3433333333333333);
     wish(classified.get('medium') === 1.5060259259259259);
