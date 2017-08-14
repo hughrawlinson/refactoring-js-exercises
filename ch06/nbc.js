@@ -11,27 +11,27 @@ const classifier = {
   labelProbabilities: new Map(),
   chordCountsInLabels: new Map(),
   smoothing: 1.01,
-  chordCountForDifficulty: function(difficulty, testChord){
+  chordCountForDifficulty(difficulty, testChord){
     return this.songList.songs.reduce((counter, song) => {
       return counter + (song.difficulty === difficulty
            ? song.chords.filter(chord => chord === testChord).length
            : 0);
     }, 0);
   },
-  likelihoodFromChord: function(difficulty, chord) {
+  likelihoodFromChord(difficulty, chord) {
     return this.chordCountForDifficulty(difficulty, chord) / this.songList.songs.length;
   },
-  valueForChordDifficulty: function(difficulty, chord) {
+  valueForChordDifficulty(difficulty, chord) {
     const value = this.likelihoodFromChord(difficulty, chord);
     return value ? value + this.smoothing : 1;
   },
-  trainAll: function() {
+  trainAll() {
     this.songList.songs.forEach(({song, chords, difficulty}) => {
       this.train(chords, difficulty);
     });
     this.setLabelProbabilities();
   },
-  train: function(chords, label){
+  train(chords, label){
     chords.forEach(chord => this.songList.allChords.add(chord));
     if(Array.from(this.labelCounts.keys()).includes(label)){
       this.labelCounts.set(label, this.labelCounts.get(label) + 1);
@@ -39,13 +39,13 @@ const classifier = {
       this.labelCounts.set(label, 1);
     }
   },
-  setLabelProbabilities: function(){
+  setLabelProbabilities(){
     this.labelCounts.forEach((_count, label) => {
       this.labelProbabilities.set(label,
                                   this.labelCounts.get(label) / this.songList.songs.length);
     });
   },
-  classify: function classify(chords){
+  classify(chords){
     return new Map(Array
       .from(this.labelProbabilities.entries())
       .map(labelWithProbability => {
