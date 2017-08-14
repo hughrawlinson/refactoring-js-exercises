@@ -7,11 +7,8 @@ const classifier = {
   probabilityOfChordsInLabels: new Map(),
   smoothing: 1.01,
   valueForChordDifficulty: function(difficulty, chord) {
-    if (probabilityOfChordsInLabels.get(difficulty)[chord]) {
-      return (probabilityOfChordsInLabels.get(difficulty)[chord] + this.smoothing);
-    } else {
-      return 1;
-    }
+    const value = probabilityOfChordsInLabels.get(difficulty)[chord];
+    return value ? value + this.smoothing : 1;
   },
   classify: function classify(chords){
     return new Map(Array
