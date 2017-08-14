@@ -4,10 +4,9 @@ const classifier = {
   labelCounts: new Map(),
   labelProbabilities: new Map(),
   chordCountsInLabels: new Map(),
-  probabilityOfChordsInLabels: new Map(),
   smoothing: 1.01,
   valueForChordDifficulty: function(difficulty, chord) {
-    const value = probabilityOfChordsInLabels.get(difficulty)[chord];
+    const value = this.chordCountsInLabels.get(difficulty)[chord];
     return value ? value + this.smoothing : 1;
   },
   classify: function classify(chords){
@@ -16,9 +15,9 @@ const classifier = {
       .map(labelWithProbability => {
         const difficulty = labelWithProbability[0]
         return [difficulty,
-                chords.reduce((total, chord) => {
-                  return total * this.valueForChordDifficulty(difficulty, chord);
-                }, this.labelProbabilities.get(difficulty) + this.smoothing)];
+                chords.reduce(
+                  (total, chord) => total * this.valueForChordDifficulty(difficulty, chord),
+                  this.labelProbabilities.get(difficulty) + this.smoothing)];
       }));
   }
 };
@@ -64,10 +63,9 @@ function setChordCountsInLabels(){
 }
 
 function setProbabilityOfChordsInLabels(){
-  probabilityOfChordsInLabels = classifier.chordCountsInLabels;
-  probabilityOfChordsInLabels.forEach(function(_count, difficulty){
-    Object.keys(probabilityOfChordsInLabels.get(difficulty)).forEach(function(chord){
-      probabilityOfChordsInLabels.get(difficulty)[chord] /= classifier.songs.length;
+  classifier.chordCountsInLabels.forEach(function(_count, difficulty){
+    Object.keys(classifier.chordCountsInLabels.get(difficulty)).forEach(function(chord){
+      classifier.chordCountsInLabels.get(difficulty)[chord] /= classifier.songs.length;
     });
   });
 }
